@@ -1,4 +1,4 @@
-use rats::kernel::prelude::VecKind;
+use rats::kernel::{prelude::VecKind, Kind};
 
 use super::one_and::*;
 
@@ -18,6 +18,12 @@ impl<T> Into<OneAnd<VecKind, T>> for NonEmptyVec<T> {
     fn into(self) -> OneAnd<VecKind, T> {
         self.0
     }
+}
+
+pub struct NonEmptyVecKind;
+
+impl Kind for NonEmptyVecKind {
+    type Ty<T> = NonEmptyVec<T>;
 }
 
 pub mod syntax {

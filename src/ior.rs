@@ -1,3 +1,7 @@
+use std::marker::PhantomData;
+
+use rats::kernel::Kind;
+
 pub enum Ior<A, B> {
     Left(A),
     Right(B),
@@ -18,33 +22,29 @@ impl<A, B> Ior<A, B> {
     }
 }
 
+pub struct LeftIorKind<B>(PhantomData<B>);
+
+impl<B> Kind for LeftIorKind<B> {
+    type Ty<T> = Ior<T, B>;
+}
+
 pub mod syntax {
     use super::*;
 
-    pub trait IorSyntax1
-    where
-        Self: Sized,
-    {
-        fn left_ior(self) -> Ior<Self, !>;
-        fn right_ior(self) -> Ior<!, Self>;
-    }
-
-    pub trait IorSyntax2<A, B>
-    where
-        Self: Sized,
-    {
-        fn both_ior(self) -> Ior<A, B>;
-    }
-
-    impl<T> IorSyntax1 for T {
-        fn left_ior(self) -> Ior<T, !> {
+    pub trait IorSyntax1: Sized {
+        fn left_ior<R>(self) -> Ior<Self, R> {
             Ior::Left(self)
         }
-
-        fn right_ior(self) -> Ior<!, T> {
+        fn right_ior<L>(self) -> Ior<L, Self> {
             Ior::Right(self)
         }
     }
+
+    pub trait IorSyntax2<A, B>: Sized {
+        fn both_ior(self) -> Ior<A, B>;
+    }
+
+    impl<T> IorSyntax1 for T {}
 
     impl<T1, T2> IorSyntax2<T1, T2> for (T1, T2) {
         fn both_ior(self) -> Ior<T1, T2> {

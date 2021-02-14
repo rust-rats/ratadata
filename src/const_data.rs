@@ -1,5 +1,7 @@
 use std::marker::PhantomData;
 
+use rats::kernel::Kind;
+
 pub struct Const<A, B>(A, PhantomData<B>);
 
 impl<A, B> Const<A, B> {
@@ -18,6 +20,12 @@ impl<A, B> Const<A, B> {
     fn new(a: A) -> Self {
         Const(a, PhantomData)
     }
+}
+
+pub struct ConstKind<B>(PhantomData<B>);
+
+impl<B> Kind for ConstKind<B> {
+    type Ty<T> = Const<T, B>;
 }
 
 pub mod syntax {
