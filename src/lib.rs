@@ -1,15 +1,18 @@
 #![allow(incomplete_features)]
 #![feature(generic_associated_types)]
 #![feature(never_type)]
+#![feature(new_uninit)]
 
 pub mod const_data;
 pub mod either;
 pub mod eval;
 pub mod ior;
+pub mod lazy;
 pub mod non_empty_vec;
 pub mod one_and;
 pub mod option;
 pub mod result;
+pub mod validated;
 
 pub mod prelude {
     pub use crate::const_data::*;
@@ -18,6 +21,7 @@ pub mod prelude {
     pub use crate::ior::*;
     pub use crate::non_empty_vec::*;
     pub use crate::one_and::*;
+    pub use crate::validated::*;
 }
 
 pub mod syntaxes {
