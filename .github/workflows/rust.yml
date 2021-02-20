@@ -36,13 +36,14 @@ jobs:
           profile: minimal
           toolchain: nightly
           override: true
-          components: rustfmt, clippy
+          components: rustfmt
       - name: Format Check
         uses: actions-rs/cargo@v1
         with:
           command: fmt
           args: --all -- --check
       - uses: actions-rs/clippy-check@v1
+        name: Clippy Check
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-features -- -D warnings
