@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use rats::kernel::Kind;
+use crate::kinded::Kind;
 
 pub enum Either<A, B> {
     Left(A),
@@ -54,7 +54,7 @@ impl<A, B> Either<A, B> {
 pub struct LeftEitherKind<B>(PhantomData<B>);
 
 impl<B> Kind for LeftEitherKind<B> {
-    type Ty<T> = Either<T, B>;
+    type Cons<T> = Either<T, B>;
 }
 
 pub mod syntax {

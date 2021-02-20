@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use rats::kernel::Kind;
+use crate::kinded::Kind;
 
 pub struct Const<A, B>(A, PhantomData<B>);
 
@@ -25,14 +25,14 @@ impl<A, B> Const<A, B> {
 pub struct ConstKind<B>(PhantomData<B>);
 
 impl<B> Kind for ConstKind<B> {
-    type Ty<T> = Const<T, B>;
+    type Cons<T> = Const<T, B>;
 }
 
 pub mod syntax {
     use super::*;
 
     pub trait ConstSyntax: Sized {
-        fn to_const(self) -> Const<Self, !> {
+        fn to_const<B>(self) -> Const<Self, B> {
             Const::new(self)
         }
     }

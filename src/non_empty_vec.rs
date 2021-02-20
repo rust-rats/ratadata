@@ -1,4 +1,6 @@
-use rats::kernel::{prelude::VecKind, Kind};
+use rats::core::prelude::VecKind;
+
+use crate::kinded::Kind;
 
 use super::one_and::*;
 
@@ -23,7 +25,7 @@ impl<T> Into<OneAnd<VecKind, T>> for NonEmptyVec<T> {
 pub struct NonEmptyVecKind;
 
 impl Kind for NonEmptyVecKind {
-    type Ty<T> = NonEmptyVec<T>;
+    type Cons<T> = NonEmptyVec<T>;
 }
 
 pub mod syntax {

@@ -1,13 +1,13 @@
-use rats::kernel::Kind;
+use crate::kinded::Kind;
 
-pub struct OptionT<K: Kind, T>(K::Ty<Option<T>>);
+pub struct OptionT<K: Kind, T>(K::Cons<Option<T>>);
 
 impl<K: Kind, T> OptionT<K, T> {
-    pub fn of(t: K::Ty<Option<T>>) -> Self {
+    pub fn of(t: K::Cons<Option<T>>) -> Self {
         OptionT(t)
     }
 
-    pub fn lift(t: K::Ty<T>) -> Self {
+    pub fn lift(t: K::Cons<T>) -> Self {
         todo!()
     }
 

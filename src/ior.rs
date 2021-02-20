@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use rats::kernel::Kind;
+use crate::kinded::Kind;
 
 pub enum Ior<A, B> {
     Left(A),
@@ -25,7 +25,7 @@ impl<A, B> Ior<A, B> {
 pub struct LeftIorKind<B>(PhantomData<B>);
 
 impl<B> Kind for LeftIorKind<B> {
-    type Ty<T> = Ior<T, B>;
+    type Cons<T> = Ior<T, B>;
 }
 
 pub mod syntax {
