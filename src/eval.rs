@@ -1,8 +1,5 @@
 use crate::lazy::Lazy;
 
-use super::either::*;
-use std::cell::RefCell;
-
 pub enum Eval<T> {
     Lazy(Lazy<T>),
     Always(Box<dyn Fn() -> T>),

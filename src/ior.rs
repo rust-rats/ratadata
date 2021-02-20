@@ -22,6 +22,7 @@ impl<A, B> Ior<A, B> {
     }
 }
 
+#[derive(Copy, Clone, Default, Debug)]
 pub struct LeftIorKind<B>(PhantomData<B>);
 
 impl<B> Kind for LeftIorKind<B> {

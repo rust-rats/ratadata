@@ -40,6 +40,7 @@ impl<T> From<T> for Id<T> {
     }
 }
 
+#[derive(Copy, Clone, Default, Debug)]
 pub struct IdKind;
 
 impl Kind for IdKind {

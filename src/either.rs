@@ -37,20 +37,15 @@ impl<A, B> Either<A, B> {
     }
 
     pub fn is_left(&self) -> bool {
-        match self {
-            Either::Left(_) => true,
-            _ => false,
-        }
+        matches!(self, Either::Left(_))
     }
 
     pub fn is_right(&self) -> bool {
-        match self {
-            Either::Right(_) => true,
-            _ => false,
-        }
+        matches!(self, Either::Right(_))
     }
 }
 
+#[derive(Copy, Clone, Default, Debug)]
 pub struct LeftEitherKind<B>(PhantomData<B>);
 
 impl<B> Kind for LeftEitherKind<B> {

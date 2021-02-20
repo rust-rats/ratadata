@@ -22,6 +22,7 @@ impl<A, B> Const<A, B> {
     }
 }
 
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ConstKind<B>(PhantomData<B>);
 
 impl<B> Kind for ConstKind<B> {
@@ -32,7 +33,7 @@ pub mod syntax {
     use super::*;
 
     pub trait ConstSyntax: Sized {
-        fn to_const<B>(self) -> Const<Self, B> {
+        fn into_const<B>(self) -> Const<Self, B> {
             Const::new(self)
         }
     }

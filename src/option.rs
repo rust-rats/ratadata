@@ -1,3 +1,9 @@
+use rats::core::{
+    applicative::{self, ApplicativeTy},
+    functor,
+    prelude::FunctorTy,
+};
+
 use crate::kinded::Kind;
 
 pub struct OptionT<K: Kind, T>(K::Cons<Option<T>>);
@@ -7,15 +13,21 @@ impl<K: Kind, T> OptionT<K, T> {
         OptionT(t)
     }
 
-    pub fn lift(t: K::Cons<T>) -> Self {
-        todo!()
+    #[rustfmt::skip]
+    pub fn lift<G: Kind>(kind: G, t: <G as FunctorTy>::Cons<T>) -> Self
+    where
+        G: FunctorTy<Cons<Option<T>> = K::Cons<Option<T>>>,
+        T: Clone
+    {
+        OptionT(functor::fmap(kind, t, |t| Some(t.clone())))
     }
 
-    pub fn from_option(t: Option<T>) -> Self
-// todo: where
-        // K: ApplicativeK,
+    #[rustfmt::skip]
+    pub fn from_option<G: Kind>(kind: G, t: Option<T>) -> Self
+    where
+        G: ApplicativeTy<Cons<Option<T>> = K::Cons<Option<T>>>,
     {
-        todo!()
+         OptionT(applicative::pure(kind, t))
     }
 }
 

@@ -1,8 +1,10 @@
-use std::{cell::RefCell, mem};
+use std::cell::RefCell;
 
 use crate::prelude::Either;
 
-pub struct Lazy<T>(RefCell<Either<T, Option<Box<dyn FnOnce() -> T>>>>);
+type TakeableBoxFn<T> = Option<Box<dyn FnOnce() -> T>>;
+
+pub struct Lazy<T>(RefCell<Either<T, TakeableBoxFn<T>>>);
 
 impl<T> Lazy<T> {
     pub fn new(f: impl Fn() -> T + 'static) -> Self {
